@@ -4,7 +4,7 @@
 #
 
 import psycopg2
-
+import math
 
 def connect():
     """Connect to the PostgreSQL database.  Returns a database connection."""
@@ -93,5 +93,8 @@ def swissPairings():
         id2: the second player's unique id
         name2: the second player's name
     """
-
+    standings = [e for player in 
+        [(player[0], player[1]) for player in query("select * from wins_by_player order by wins")] for e in player]
+    standings = [tuple(standings[4*i:4*i+4]) for i in range(0, len(standings) / 4)]
+    return standings
 
