@@ -18,11 +18,11 @@ def execute(*statement):
     DB.commit()
     DB.close()
 
-def query(q):
+def query(*q):
     """Executes a single SQL query and returns all results."""
     DB = connect()
     c = DB.cursor()
-    c.execute(q)
+    c.execute(*q)
     ret = c.fetchall()
     DB.close()
     return ret
@@ -70,12 +70,16 @@ def playerStandings():
 
 def reportMatch(winner, loser):
     """Records the outcome of a single match between two players.
+    If winner and loser are the same player it means that the player is scheduled for a "bye" round.
 
     Args:
       winner:  the id number of the player who won
       loser:  the id number of the player who lost
     """
-    execute("insert into matches (players, winner) values ('{%s, %s}', %s)", (winner, loser, winner))
+    if winner == loser:
+        execute("insert into matches (players, winner) values ('{}', %s)", (winner,))
+    else:    
+        execute("insert into matches (players, winner) values ('{%s, %s}', %s)", (winner, loser, winner))
  
  
 def swissPairings():
@@ -93,8 +97,37 @@ def swissPairings():
         id2: the second player's unique id
         name2: the second player's name
     """
-    standings = [e for player in 
-        [(player[0], player[1]) for player in query("select * from wins_by_player order by wins")] for e in player]
-    standings = [tuple(standings[4*i:4*i+4]) for i in range(0, len(standings) / 4)]
-    return standings
+    return (__pairWithOddPlayers() if __oddNumberOfPlayers() else __pairWithEvenPlayers())
 
+
+def __oddNumberOfPlayers():
+    """Returns a boolean which is true if there is an odd number of players in the tournament"""
+    return len(playerStandings()) % 2 == 1
+
+def __pairWithOddPlayers():
+    """Returns a list of pairs of players for the next round of a match when there is an odd number of players"""
+    oddPlayerId, oddPlayerName = __playerWithMostMatches()
+    oddPlayer = [(oddPlayerId, oddPlayerName, oddPlayerId, oddPlayerName)]
+
+    return oddPlayer + __groupPlayersIntoTuples(__listPlayersByWins(oddPlayerId))
+
+def __pairWithEvenPlayers():
+    """Returns a list of pairs of players for the next round of a match when there is an even number of players"""
+    return __groupPlayersIntoTuples(__listPlayersByWins(None))
+
+def __listPlayersByWins(oddPlayerId):
+    """Returns a list of player ids and names sorted by their win count filtering out the odd player.
+
+    Returns:
+        A list of player ids and names (id, name, id, name, ...)
+    """
+    return [e for player in 
+        [(player[0], player[1]) for player in query("select * from wins_by_player order by wins") if player[0] != oddPlayerId] for e in player]
+
+def __groupPlayersIntoTuples(playerList):
+    """Returns a list of pairs of players organized as tuples"""
+    return [tuple(playerList[4*i:4*i+4]) for i in range(0, len(playerList) / 4)]
+
+def __playerWithMostMatches():
+    """Returns a player id with the most matches played"""
+    return query("select id, name from matches_by_player limit 1")[0]
