@@ -7,7 +7,7 @@ import psycopg2
 import math
 
 def connect():
-    """Connect to the PostgreSQL database.  Returns a database connection."""
+    """Connect to the PostgreSQL database. Returns a database connection."""
     return psycopg2.connect("dbname=tournament")
 
 def execute(*statement):
@@ -43,7 +43,7 @@ def countPlayers():
 def registerPlayer(name):
     """Adds a player to the tournament database.
   
-    The database assigns a unique serial id number for the player.  (This
+    The database assigns a unique serial id number for the player. (This
     should be handled by your SQL database schema, not in your Python code.)
   
     Args:
@@ -86,7 +86,7 @@ def swissPairings():
     """Returns a list of pairs of players for the next round of a match.
   
     Assuming that there are an even number of players registered, each player
-    appears exactly once in the pairings.  Each player is paired with another
+    appears exactly once in the pairings. Each player is paired with another
     player with an equal or nearly-equal win record, that is, a player adjacent
     to him or her in the standings.
   
@@ -121,7 +121,7 @@ def __listPlayersByWins(oddPlayerId):
     Returns:
         A list of player ids and names (id, name, id, name, ...)
     """
-    return [e for player in 
+    return [e for player in
         [(player[0], player[1]) for player in query("select * from wins_by_player") if player[0] != oddPlayerId] for e in player]
 
 def __groupPlayersIntoTuples(playerList):
