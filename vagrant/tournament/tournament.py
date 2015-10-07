@@ -122,7 +122,7 @@ def __listPlayersByWins(oddPlayerId):
         A list of player ids and names (id, name, id, name, ...)
     """
     return [e for player in 
-        [(player[0], player[1]) for player in query("select * from wins_by_player order by wins") if player[0] != oddPlayerId] for e in player]
+        [(player[0], player[1]) for player in query("select * from wins_by_player") if player[0] != oddPlayerId] for e in player]
 
 def __groupPlayersIntoTuples(playerList):
     """Returns a list of pairs of players organized as tuples"""

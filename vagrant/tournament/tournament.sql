@@ -22,7 +22,7 @@ create table matches (
 );
 
 create view wins_by_player as select p.id as id, p.name, count(m.winner) as wins 
-  from players as p left join matches as m on (p.id = m.winner) group by p.id;
+  from players as p left join matches as m on (p.id = m.winner) group by p.id order by wins;
 
 create view matches_by_player as select p.id as id, p.name as name, count(m.players) as matches 
   from players as p left join matches as m on (p.id = any (m.players)) group by p.id
