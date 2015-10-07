@@ -29,4 +29,4 @@ create view matches_by_player as select p.id as id, p.name as name, count(m.play
   order by matches desc;
 
 create view player_standings as select wins_by_player.id, wins_by_player.name, wins, matches from wins_by_player
-  left join matches_by_player on (wins_by_player.id = matches_by_player.id);
+  left join matches_by_player on (wins_by_player.id = matches_by_player.id) order by wins desc;
