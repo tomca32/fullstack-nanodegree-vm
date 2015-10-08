@@ -23,7 +23,7 @@ To run the tests we need to ssh into a running vagrant instance, seed the databa
 vagrant ssh
 cd /vagrant
 ./seed.sh
-python tournament
+python tournament_test.py
 ```
 
 ### Functionality
