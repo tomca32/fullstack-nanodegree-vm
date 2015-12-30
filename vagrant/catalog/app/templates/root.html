@@ -1,1 +1,8 @@
 <h1>Catalog App</h1>
+
+<h2>Categories</h2>
+<ul>
+  {% for category in categories %}
+    <li><strong>{{category.name}}</strong></li>
+  {% endfor %}
+</ul>
