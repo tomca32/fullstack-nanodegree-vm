@@ -1,7 +1,9 @@
-{% include 'header.html' %}
+{% extends 'layout.html' %}
+{% block content %}
 <h2>Categories</h2>
 <ul>
   {% for category in categories %}
     <li><strong>{{category.name}}</strong></li>
   {% endfor %}
 </ul>
+{% endblock %}
