@@ -18,6 +18,8 @@ Base.metadata.create_all(engine)
 DBSession = sessionmaker(bind=engine)
 session = DBSession()
 
+import routes
+
 @app.errorhandler(404)
 def not_found(error):
   return render_template('404.html'), 404
