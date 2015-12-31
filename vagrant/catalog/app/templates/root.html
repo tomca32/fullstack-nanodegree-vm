@@ -1,17 +1,23 @@
 {% extends 'layout.html' %}
 {% block content %}
-<a href="{{url_for('new_category_form')}}">New Category</a>
-<h2>Categories</h2>
-<ul>
-  {% for category in categories %}
-    <li><strong>{{category.name}}</strong></li>
-  {% endfor %}
-</ul>
-<a href="{{url_for('new_item_form')}}">New Item</a>
-<h2>Items</h2>
-<ul>
-  {% for item in items %}
-    <li><strong>{{item.name}}</strong></li>
-  {% endfor %}
-</ul>
+<div class="row">
+  <div class="col-md-4 divider">
+    <h2>Categories</h2>
+    <a href="{{url_for('new_category_form')}}">New Category</a>
+    <ul>
+      {% for category in categories %}
+        <li><strong>{{category.name}}</strong></li>
+      {% endfor %}
+    </ul>
+  </div>
+  <div class="col-md-5">
+    <h2>Items</h2>
+    <a href="{{url_for('new_item_form')}}">New Item</a>
+    <ul>
+      {% for item in items %}
+        <li><strong>{{item.name}}</strong></li>
+      {% endfor %}
+    </ul>
+  </div>
+</div>
 {% endblock %}
