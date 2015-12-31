@@ -1,5 +1,15 @@
 {% extends 'layout.html' %}
 {% block content %}
+{% with messages = get_flashed_messages() %}
+{% if messages %}
+
+<ul>
+{% for message in messages %}
+  <li><strong>{{message}}</strong></li>
+  {% endfor %}
+</ul>
+{% endif %}
+{% endwith %}
 <form action="{{url_for('newCategory')}}" method = 'POST'>
 
 <p>Name:</p>
@@ -7,6 +17,7 @@
 <input type='text' size='30' name='name'>
 
 <input type='submit' value='Create'>
+<a href="{{url_for('root')}}">Cancel</a>
 
 </form>
 {% endblock %}
