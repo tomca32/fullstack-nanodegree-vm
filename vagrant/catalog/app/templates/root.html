@@ -6,7 +6,7 @@
     <a href="{{url_for('new_category_form')}}">New Category</a>
     <ul>
       {% for category in categories %}
-        <li><strong>{{category.name}}</strong></li>
+        <li><strong><a href="{{url_for('get_category', category_name = category.name)}}">{{category.name}}</strong></a></li>
       {% endfor %}
     </ul>
   </div>
@@ -15,7 +15,7 @@
     <a href="{{url_for('new_item_form')}}">New Item</a>
     <ul>
       {% for item in items %}
-        <li><strong>{{item.name}}</strong></li>
+        <li><strong>{{item.name}}</strong> - ({{item.category.name}})</li>
       {% endfor %}
     </ul>
   </div>

@@ -11,3 +11,7 @@ def create_item(name, description, category_name):
     new_item = Item(name=name, description=description, category=category)
     session.add(new_item)
     session.commit()
+
+
+def get_items_by_category_id(category_id):
+    return session.query(Item).filter_by(category_id=category_id).all()
