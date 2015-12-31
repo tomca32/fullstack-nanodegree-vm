@@ -1,7 +1,7 @@
 from flask import render_template, request, redirect, url_for, flash
 from .. import app
 from .. import session
-from ..models import Category
+from ..services import createCategory, categoryExists
 
 @app.route('/category/new', methods = ['GET'])
 def newCategoryForm():
@@ -9,12 +9,8 @@ def newCategoryForm():
 
 @app.route('/category/new', methods = ['POST'])
 def newCategory():
-  existingCategories = session.query(Category).filter_by(name = request.form['name']).count()
-  if existingCategories > 0:
+  if categoryExists(request.form['name']):
     flash('Error: Category with that name already exists.')
     return redirect(url_for('newCategoryForm'))
-
-  newCategory = Category(name = request.form['name'])
-  session.add(newCategory)
-  session.commit()
+  createCategory(request.form['name'])
   return redirect(url_for('root'))
