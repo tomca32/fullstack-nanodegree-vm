@@ -15,3 +15,7 @@ def create_item(name, description, category_name):
 
 def get_items_by_category_id(category_id):
     return session.query(Item).filter_by(category_id=category_id).all()
+
+
+def get_item_by_name_and_category_id(item_name, category_id):
+    return session.query(Item).filter_by(name=item_name, category_id=category_id).one()
