@@ -7,4 +7,11 @@
     <li><strong>{{category.name}}</strong></li>
   {% endfor %}
 </ul>
+<a href="{{url_for('newItemForm')}}">New Item</a>
+<h2>Items</h2>
+<ul>
+  {% for item in items %}
+    <li><strong>{{item.name}}</strong></li>
+  {% endfor %}
+</ul>
 {% endblock %}
