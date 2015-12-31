@@ -1,6 +1,6 @@
 {% extends 'layout.html' %}
 {% block content %}
-<a href="{{url_for('newCategory')}}">New Category</a>
+<a href="{{url_for('newCategoryForm')}}">New Category</a>
 <h2>Categories</h2>
 <ul>
   {% for category in categories %}
