@@ -27,3 +27,7 @@ header .title {
 .divider {
   border-right: 2px whitesmoke solid;
 }
+
+.breadcrumbs li {
+  display: inline;
+}

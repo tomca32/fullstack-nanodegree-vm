@@ -1,7 +1,13 @@
 {% extends 'layout.html' %}
 {% block content %}
+<ul class="list-unstyled breadcrumbs">
+  <li><a href="{{url_for('root')}}">Home</a></li>
+  <li>/</li>
+  <li><a href="{{url_for('get_category', category_name=item.category.name)}}">{{item.category.name}}</a></li>
+  <li>/</li>
+  <li>{{item.name}}</li>
+</ul>
 <h2>{{item.name}}</h2>
-<h4><a href="{{url_for('get_category', category_name=item.category.name)}}">({{item.category.name}})</a></h4>
 <p>
   {{item.description}}
 </p>
