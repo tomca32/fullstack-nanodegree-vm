@@ -3,7 +3,6 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy import create_engine
 
-
 app = Flask(__name__)
 app.config.from_object('config')
 
@@ -20,6 +19,7 @@ session = DBSession()
 
 import routes
 
+
 @app.errorhandler(404)
 def not_found(error):
-  return render_template('404.html'), 404
+    return render_template('404.html'), 404
