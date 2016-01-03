@@ -36,8 +36,25 @@ star_destroyer = Item(name='Star Destroyer',
                       description='The Imperial-class Star Destroyer was a type of Star Destroyer widely used by the Galactic Empire and the Imperial Remnant. There were two sub-classes of the line: the Imperial I-class Star Destroyer (also known as Imperator-class), and the Imperial II-class Star Destroyer.',
                       category=capitals_category)
 
+mc_80 = Item(name='MC80 Liberty type Star Cruiser',
+                      description='The MC80 Liberty type Star Cruiser was an early type of Mon Calamari Star Cruiser put into service for the Rebel Alliance during the Galactic Civil War.',
+                      category=capitals_category)
+
+mc_80_home_one = Item(name='MC80 Home One type Star Cruiser',
+                      description='The MC80 Home One type Star Cruiser, also known as the MC80 Command Cruiser was one of the several MC80 Star Cruiser designs built by the Mon Calamari. Originally fielded before the Galactic Civil War as civilian vessels, they were modified by the Rebel Alliance, and served in command ship and battleship roles in the Alliance Fleet.',
+                      category=capitals_category)
+
+victory = Item(name='Victory I-class Star Destroyer',
+                      description='The Victory I-class Star Destroyer, also known as the Victory I-class Destroyer and Victoria I-class Star Destroyer, was a warship designed for planetary defense, planetary assault, ground troop support, and ship-to-ship combat. It was used by the Galactic Republic during the mid-Clone Wars, the Galactic Empire and the Corporate Sector during the Galactic Civil War and the Confederation during the Second Galactic Civil War.',
+                      category=capitals_category)
+
+
+
 session.add(x_wing)
 session.add(y_wing)
 session.add(tie_fighter)
 session.add(star_destroyer)
+session.add(mc_80)
+session.add(mc_80_home_one)
+session.add(victory)
 session.commit()
