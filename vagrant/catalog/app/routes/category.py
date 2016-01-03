@@ -28,17 +28,3 @@ def get_category(category_name):
         return render_template('404.html', message="Category '{0}' does not exist.".format(category_name))
     items = get_items_by_category_id(category.id)
     return render_template('category.html', category=category, items=items)
-
-
-@app.route('/category/<string:category_name>/item/<string:item_name>')
-def get_item(category_name, item_name):
-    try:
-        category = get_category_by_name(category_name)
-    except NoResultFound:
-        return render_template('404.html', message="Category '{0}' does not exist.".format(category_name))
-    try:
-        item = get_item_by_name_and_category_id(item_name, category.id)
-    except NoResultFound:
-        return render_template('404.html',
-                               message="Item '{0}' does not exist in category {1].".format(item_name, category_name))
-    return render_template('item.html', item=item)

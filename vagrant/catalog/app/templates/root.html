@@ -15,7 +15,7 @@
     <a href="{{url_for('new_item_form')}}">New Item</a>
     <ul>
       {% for item in items %}
-        <li><strong><a href="{{url_for('get_item', category_name=item.category.name, item_name=item.name)}}">{{item.name}}</a></strong> - ({{item.category.name}})</li>
+        <li><strong><a href="{{url_for('get_item', category_name=item.category.name, item_name=item.name)}}">{{item.name}}</a></strong> - ({{item.category.name}}) - <a href="{{url_for('edit_item_form', category_name=item.category.name, item_name=item.name)}}">Edit</a></li>
       {% endfor %}
     </ul>
   </div>
