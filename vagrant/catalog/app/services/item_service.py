@@ -6,6 +6,7 @@ from .. import session
 def get_item_by_id(id):
     return session.query(Item).filter_by(id=id).one()
 
+
 def item_exists(name):
     return session.query(Item).filter_by(name=name).count() > 0
 
@@ -33,3 +34,9 @@ def get_items_by_category_id(category_id):
 
 def get_item_by_name_and_category_id(item_name, category_id):
     return session.query(Item).filter_by(name=item_name, category_id=category_id).one()
+
+
+def drop_item(item_id):
+    item = session.query(Item).filter_by(id=item_id).one()
+    session.delete(item)
+    session.commit()

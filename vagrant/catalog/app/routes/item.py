@@ -4,7 +4,7 @@ from app.decorators import with_item
 from .. import app
 from .. import session
 from ..models import Category
-from ..services import item_exists, create_item, update_item
+from ..services import item_exists, create_item, update_item, drop_item
 
 
 @app.route('/item/new', methods=['GET'])
@@ -39,3 +39,15 @@ def edit_item_form(item):
 def edit_item(item_id):
     update_item(item_id, request.form['name'], request.form['description'], request.form['category'])
     return redirect(url_for('get_item', category_name=request.form['category'], item_name=request.form['name']))
+
+
+@app.route('/category/<string:category_name>/item/<string:item_name>/delete', methods=['GET'])
+@with_item
+def delete_item_form(item):
+    return render_template('item_delete.html', item=item)
+
+
+@app.route('/item/<int:item_id>/delete', methods=['POST', 'DELETE'])
+def delete_item(item_id):
+    drop_item(item_id)
+    return redirect(url_for('root'))
