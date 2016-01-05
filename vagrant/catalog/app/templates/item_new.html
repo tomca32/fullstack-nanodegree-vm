@@ -13,15 +13,15 @@
 <form action="{{url_for('new_item')}}" method = 'POST'>
 
 <p>Name:</p>
-<input type='text' size='30' name='name'>
+<input type='text' size='30' name='name' value="{{default_name}}">
 
 <p>Description:</p>
-<textarea name="description"></textarea>
+<textarea name="description">{{default_description}}</textarea>
 
 <p>Category:</p>
 <select name="category">
   {% for category in categories %}
-  <option value="{{category.name}}">{{category.name}}</option>
+  <option value="{{category.name}}" {{'selected="selected"' if category.name == default_category_name}}>{{category.name}}</option>
   {% endfor %}
 </select>
 
