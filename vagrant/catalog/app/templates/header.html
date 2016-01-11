@@ -1,3 +1,14 @@
-<header class="content-area">
-  <h1 class="title"><a href="{{url_for('root')}}">Catalog App</a></h1>
+<header class="content-area clearfix">
+  <h1 class="title pull-left"><a href="{{url_for('root')}}">Catalog App</a></h1>
+  <div id="signInButton" class="pull-right">
+    <span class="g-signin"
+      data-scope="openid email"
+      data-clientid="403829960310-hs2filvsqgqvve6es8bt130luf3quk2t.apps.googleusercontent.com"
+      data-redirecturi="postmessage"
+      data-accesstype="offline"
+      data-cookiepolicy="single_host_origin"
+      data-callback="signInCallback"
+      data-approvalprompt="force">
+    </span>
+  </div>
 </header>

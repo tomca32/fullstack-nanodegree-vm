@@ -1,4 +1,8 @@
+import random
+import string
+
 from flask import Flask, render_template
+from flask import session as login_session
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy import create_engine
@@ -18,6 +22,15 @@ DBSession = sessionmaker(bind=engine)
 session = DBSession()
 
 import routes
+
+
+def generate_csrf_token():
+    return ''.join(random.choice(string.ascii_uppercase + string.digits) for _ in xrange(32))
+
+
+@app.before_request
+def create_csrf_token():
+    login_session['state'] = generate_csrf_token()
 
 
 @app.errorhandler(404)
