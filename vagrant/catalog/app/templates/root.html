@@ -3,7 +3,7 @@
 <div class="row">
   <div class="col-md-4 divider">
     <h2>Categories</h2>
-    <a href="{{url_for('new_category_form')}}">New Category</a>
+    {% include 'components/new_category_button.html' %}
     <ul>
       {% for category in categories %}
         <li><strong><a href="{{url_for('get_category', category_name = category.name)}}">{{category.name}}</strong></a></li>
@@ -12,10 +12,10 @@
   </div>
   <div class="col-md-5">
     <h2>Items</h2>
-    <a href="{{url_for('new_item_form')}}">New Item</a>
+    {% include 'components/new_item_button.html' %}
     <ul>
       {% for item in items %}
-        <li><strong><a href="{{url_for('get_item', category_name=item.category.name, item_name=item.name)}}">{{item.name}}</a></strong> - ({{item.category.name}}) - <a href="{{url_for('edit_item_form', category_name=item.category.name, item_name=item.name)}}">Edit</a> <a href="{{url_for('delete_item_form', category_name=item.category.name, item_name=item.name)}}">Delete</a></li>
+        <li><strong><a href="{{url_for('get_item', category_name=item.category.name, item_name=item.name)}}">{{item.name}}</a></strong> - ({{item.category.name}}) {% include 'components/edit_item_button.html' %} {% include 'components/delete_item_button.html' %}</li>
       {% endfor %}
     </ul>
   </div>

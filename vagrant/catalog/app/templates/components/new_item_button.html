@@ -1,0 +1,3 @@
+{% if 'access_token' in session %}
+  <a href="{{url_for('new_item_form')}}">New Item</a>
+{% endif %}
