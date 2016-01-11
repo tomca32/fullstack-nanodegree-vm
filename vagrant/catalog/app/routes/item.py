@@ -1,6 +1,6 @@
 from flask import render_template, request, redirect, url_for, flash, jsonify
 
-from app.decorators import with_item, provide_query_args, logged_in
+from app.decorators import with_item, provide_query_args, logged_in, with_item_by_id
 from .. import app
 from .. import session
 from ..models import Category
@@ -44,10 +44,22 @@ def get_item(item):
     return render_template('item.html', item=item)
 
 
+@app.route('/item/<string:item_id>/')
+@with_item_by_id
+def get_item_by_id(item):
+    return redirect((url_for('get_item', item_name=item.name, category_name=item.category.name)))
+
+
 @app.route('/category/<string:category_name>/item/<string:item_name>/json/')
 @with_item
 def get_item_json(item):
     return jsonify(item.serialize)
+
+
+@app.route('/item/<string:item_id>/json/')
+@with_item_by_id
+def get_item_by_id_json(item):
+    return redirect((url_for('get_item_json', item_name=item.name, category_name=item.category.name)))
 
 
 @app.route('/category/<string:category_name>/item/<string:item_name>/edit', methods=['GET'])

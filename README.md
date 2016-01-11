@@ -21,7 +21,8 @@ vagrant up
 | ------------- |:-------------:| -----:|
 | /json      | JSON | All categories with all items |
 | /category/:category_name/json      | JSON      |   specific category and its items |
-| /category/:category_name/item/item_name/json | JSON      |    specific item  |
+| /category/:category_name/item/:item_name/json | JSON      |    specific item  |
+| /item/:item_id/json | JSON      |    specific item (alternate path if item id is known) |
 
 
 ## P2 Tournament Results

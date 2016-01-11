@@ -5,7 +5,7 @@ from flask import session as login_session
 from sqlalchemy.orm.exc import NoResultFound
 from werkzeug.exceptions import abort
 
-from app.services import get_category_by_name, get_item_by_name_and_category_id
+from app.services import get_category_by_name, get_item_by_name_and_category_id, get_item_by_id
 
 
 def with_category(f):
@@ -44,6 +44,24 @@ def with_item(f):
         except NoResultFound:
             return render_template('404.html', message="Item '{0}' does not exist in category {1].".format(item_name,
                                                                                                            category.name))
+        return f(item=item)
+
+    decorator.__name__ = f.__name__  # decorator gets the same name as the decorated function to preserve routing
+    return decorator
+
+
+def with_item_by_id(f):
+    """
+    This decorator provides an Item for the decorated view function
+    :param f: view function or route being decorated
+    :return: decorated providing the Item for the view function or rendering 404 if Item doesn't exist
+    """
+
+    def decorator(item_id):
+        try:
+            item = get_item_by_id(item_id)
+        except NoResultFound:
+            return render_template('404.html', message="Item with id: '{0}' does not exist.".format(item_id))
         return f(item=item)
 
     decorator.__name__ = f.__name__  # decorator gets the same name as the decorated function to preserve routing
