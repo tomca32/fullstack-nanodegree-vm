@@ -1,7 +1,9 @@
 import inspect
 
 from flask import render_template, request
+from flask import session as login_session
 from sqlalchemy.orm.exc import NoResultFound
+from werkzeug.exceptions import abort
 
 from app.services import get_category_by_name, get_item_by_name_and_category_id
 
@@ -62,6 +64,17 @@ def provide_query_args(f):
         arguments = [(arg, args[arg]) for arg in inspect.getargspec(f).args if arg in args]
         kwargs = dict((x, y) for x, y in arguments)  # convert list of tuple arguments in a dictionary
         return f(**kwargs)
+
+    decorator.__name__ = f.__name__
+    return decorator
+
+
+def logged_in(f):
+    def decorator(*args, **kwargs):
+        if 'access_token' not in login_session:
+            print 'not auth'
+            return abort(401)
+        return f(*args, **kwargs)
 
     decorator.__name__ = f.__name__
     return decorator

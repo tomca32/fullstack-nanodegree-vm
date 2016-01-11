@@ -1,16 +1,18 @@
 from flask import render_template, request, redirect, url_for, flash
 
-from app.decorators import with_category
+from app.decorators import with_category, logged_in
 from .. import app
 from ..services import create_category, category_exists, get_items_by_category_id
 
 
 @app.route('/category/new', methods=['GET'])
+@logged_in
 def new_category_form():
     return render_template('category_new.html')
 
 
 @app.route('/category/new', methods=['POST'])
+@logged_in
 def new_category():
     if category_exists(request.form['name']):
         flash('Error: Category with that name already exists.')

@@ -1,6 +1,6 @@
 from flask import render_template, request, redirect, url_for, flash
 
-from app.decorators import with_item, provide_query_args
+from app.decorators import with_item, provide_query_args, logged_in
 from .. import app
 from .. import session
 from ..models import Category
@@ -8,6 +8,7 @@ from ..services import item_exists, create_item, update_item, drop_item
 
 
 @app.route('/item/new', methods=['GET'])
+@logged_in
 @provide_query_args
 def new_item_form(default_name='', default_description='', default_category_name=''):
     """
@@ -24,6 +25,7 @@ def new_item_form(default_name='', default_description='', default_category_name
 
 
 @app.route('/item/new', methods=['POST'])
+@logged_in
 def new_item():
     name = request.form['name'].strip()
     if item_exists(name):
@@ -43,6 +45,7 @@ def get_item(item):
 
 
 @app.route('/category/<string:category_name>/item/<string:item_name>/edit', methods=['GET'])
+@logged_in
 @with_item
 def edit_item_form(item):
     categories = session.query(Category).all()
@@ -50,18 +53,21 @@ def edit_item_form(item):
 
 
 @app.route('/item/<int:item_id>/edit', methods=['POST', 'PUT'])
+@logged_in
 def edit_item(item_id):
     update_item(item_id, request.form['name'], request.form['description'], request.form['category'])
     return redirect(url_for('get_item', category_name=request.form['category'], item_name=request.form['name']))
 
 
 @app.route('/category/<string:category_name>/item/<string:item_name>/delete', methods=['GET'])
+@logged_in
 @with_item
 def delete_item_form(item):
     return render_template('item_delete.html', item=item)
 
 
 @app.route('/item/<int:item_id>/delete', methods=['POST', 'DELETE'])
+@logged_in
 def delete_item(item_id):
     drop_item(item_id)
     return redirect(url_for('root'))
