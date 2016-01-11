@@ -1,4 +1,4 @@
-from flask import render_template, request, redirect, url_for, flash
+from flask import render_template, request, redirect, url_for, flash, jsonify
 
 from app.decorators import with_item, provide_query_args, logged_in
 from .. import app
@@ -42,6 +42,12 @@ def new_item():
 @with_item
 def get_item(item):
     return render_template('item.html', item=item)
+
+
+@app.route('/category/<string:category_name>/item/<string:item_name>/json/')
+@with_item
+def get_item_json(item):
+    return jsonify(item.serialize)
 
 
 @app.route('/category/<string:category_name>/item/<string:item_name>/edit', methods=['GET'])

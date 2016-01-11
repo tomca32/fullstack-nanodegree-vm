@@ -13,6 +13,17 @@ vagrant up
 #... wait for a while...
 ```
 
+## P3 Item Catalog
+
+### Serialization
+
+| Endpoint        | Format           | Result  |
+| ------------- |:-------------:| -----:|
+| /json      | JSON | All categories with all items |
+| /category/:category_name/json      | JSON      |   specific category and its items |
+| /category/:category_name/item/item_name/json | JSON      |    specific item  |
+
+
 ## P2 Tournament Results
 
 ### Testing

@@ -1,4 +1,4 @@
-from flask import render_template, request, redirect, url_for, flash
+from flask import render_template, request, redirect, url_for, flash, jsonify
 
 from app.decorators import with_category, logged_in
 from .. import app
@@ -26,3 +26,10 @@ def new_category():
 def get_category(category):
     items = get_items_by_category_id(category.id)
     return render_template('category.html', category=category, items=items)
+
+
+@app.route('/category/<string:category_name>/json/')
+@with_category
+def get_category_json(category):
+    items = get_items_by_category_id(category.id)
+    return jsonify(category.serialize, **{'items': [i.serialize for i in items]})

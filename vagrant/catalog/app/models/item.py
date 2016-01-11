@@ -11,3 +11,13 @@ class Item(Base):
     description = Column(Text())
     category_id = Column(Integer, ForeignKey('category.id'))
     category = relationship(Category)
+
+    @property
+    def serialize(self):
+        return {
+            'name': self.name,
+            'description': self.description,
+            'id': self.id,
+            'category': self.category.name,
+            'category_id': self.category_id
+        }
