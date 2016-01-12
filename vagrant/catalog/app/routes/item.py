@@ -1,5 +1,5 @@
-from flask import render_template, request, redirect, url_for, flash, jsonify
-
+from flask import render_template, request, redirect, url_for, flash, jsonify, Response
+import xml.etree.ElementTree as ET
 from app.decorators import with_item, provide_query_args, logged_in, with_item_by_id
 from .. import app
 from .. import session
@@ -56,10 +56,22 @@ def get_item_json(item):
     return jsonify(item.serialize)
 
 
+@app.route('/category/<string:category_name>/item/<string:item_name>/xml/')
+@with_item
+def get_item_xml(item):
+    return Response(ET.tostring(item.to_xml_element), mimetype='text/xml')
+
+
 @app.route('/item/<string:item_id>/json/')
 @with_item_by_id
 def get_item_by_id_json(item):
     return redirect((url_for('get_item_json', item_name=item.name, category_name=item.category.name)))
+
+
+@app.route('/item/<string:item_id>/xml/')
+@with_item_by_id
+def get_item_by_id_xml(item):
+    return redirect((url_for('get_item_xml', item_name=item.name, category_name=item.category.name)))
 
 
 @app.route('/category/<string:category_name>/item/<string:item_name>/edit', methods=['GET'])

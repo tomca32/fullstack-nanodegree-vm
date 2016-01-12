@@ -1,4 +1,5 @@
-from flask import render_template, request, redirect, url_for, flash, jsonify
+from flask import render_template, request, redirect, url_for, flash, jsonify, Response
+import xml.etree.ElementTree as ET
 
 from app.decorators import with_category, logged_in
 from .. import app
@@ -33,3 +34,15 @@ def get_category(category):
 def get_category_json(category):
     items = get_items_by_category_id(category.id)
     return jsonify(category.serialize, **{'items': [i.serialize for i in items]})
+
+
+@app.route('/category/<string:category_name>/xml/')
+@with_category
+def get_category_xml(category):
+    category_xml = category.to_xml_element
+
+    items = ET.Element('items')
+    items.extend([i.to_xml_element for i in get_items_by_category_id(category.id)])
+
+    category_xml.append(items)
+    return Response(ET.tostring(category_xml), mimetype='text/xml')
