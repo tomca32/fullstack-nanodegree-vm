@@ -2,9 +2,11 @@
   width: 90%;
   margin: auto;
   background: white;
-  border: 1px solid black;
+  border: 1px solid #C6C6C6;
   margin-bottom: 20px;
   padding: 10px;
+  border-radius: 10px;
+  box-shadow: 3px 3px 4px #969292;
 }
 
 body {
