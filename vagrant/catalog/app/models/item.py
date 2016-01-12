@@ -1,5 +1,5 @@
 import xml.etree.ElementTree as ET
-from sqlalchemy import Column, ForeignKey, Integer, String, Text
+from sqlalchemy import Column, ForeignKey, Integer, String, Text, DateTime, func
 from sqlalchemy.orm import relationship
 from category import Category
 from .. import Base
@@ -13,6 +13,7 @@ class Item(Base):
     category_id = Column(Integer, ForeignKey('category.id'))
     category = relationship(Category)
     image_url = Column(String(250))
+    created_at = Column(DateTime, default=func.now())
 
     @property
     def serialize(self):

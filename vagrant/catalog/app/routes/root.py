@@ -10,7 +10,7 @@ import xml.etree.ElementTree as ET
 @app.route('/')
 def root():
     categories = session.query(Category).all()
-    items = session.query(Item).all()
+    items = session.query(Item).order_by(Item.created_at.desc()).all()
     return render_template('root.html', categories=categories, items=items)
 
 
