@@ -15,11 +15,37 @@ vagrant up
 
 ## P3 Item Catalog
 
+### Starting
+
+To run the application you need to ssh into a running vagrant instance and start the app:
+
+```shell
+vagrant ssh
+cd /vagrant/catalog
+python run.py
+```
+
+This will start the application at the port 5000. Simply open your browser and direct it to localhost:5000
+
+You can reset and seed the database by running:
+
+```shell
+vagrant ssh
+cd /vagrant/catalog
+python seed.py
+```
+
+### Auth
+
+Without being logged in, you can browse the catalog but you cannot make any changes. Add, Edit and Delete buttons are not shown and trying to visit the URL for those actions wil result in 401. You can login with any Google account using the button in the top right of the application.
+
 ### Images
 
 Items can contain an image. No image itself is contained in the application but the image url can be passed during item creation. There is no URL validation present, so if there is no image in the URL, a broken image will be displayed.
 
 ### Serialization
+
+There are endpoint for JSON and XML formats. Prefix all endpoints with the application URL (localhost:5000 by default):
 
 | Endpoint        | Format           | Result  |
 | ------------- |:-------------:| -----:|
