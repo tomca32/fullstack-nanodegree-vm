@@ -96,3 +96,20 @@ def logged_in(f):
 
     decorator.__name__ = f.__name__
     return decorator
+
+
+def check_csrf(f):
+    """
+    Wraps an endpoint with a decorator that checks the presence of a CSRF token. If not present or invalid, it aborts woth 401 Unauthorized
+    :param f: Endpoint (view function)
+    :return: Decorated function
+    """
+    def decorator(*args, **kwargs):
+        print request.form['csrftoken']
+        print login_session['csrftoken']
+        if request.form['csrftoken'] != login_session['csrftoken']:
+            return abort(401)
+        return f(*args, **kwargs)
+
+    decorator.__name__ = f.__name__
+    return decorator

@@ -1,11 +1,10 @@
-import random
-import string
-
 from flask import Flask, render_template, request, Response
 from flask import session as login_session
+from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
-from sqlalchemy import create_engine
+
+from app.security_service import generate_csrf_token
 
 app = Flask(__name__)
 app.config.from_object('config')
@@ -22,10 +21,6 @@ DBSession = sessionmaker(bind=engine)
 session = DBSession()
 
 import routes
-
-
-def generate_csrf_token():
-    return ''.join(random.choice(string.ascii_uppercase + string.digits) for _ in xrange(32))
 
 
 @app.before_request

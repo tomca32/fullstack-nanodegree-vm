@@ -1,14 +1,15 @@
+import json
 import os
 
-from oauth2client.client import flow_from_clientsecrets
-from oauth2client.client import FlowExchangeError
 import httplib2
-import json
-from flask import make_response, request, flash, url_for
 import requests
+from flask import make_response, request, url_for
 from flask import session as login_session
+from oauth2client.client import FlowExchangeError
+from oauth2client.client import flow_from_clientsecrets
 from werkzeug.utils import redirect
 
+from app.security_service import generate_csrf_token
 from .. import app
 
 CLIENT_ID = json.loads(
@@ -86,6 +87,8 @@ def gconnect():
     login_session['picture'] = data['picture']
     login_session['email'] = data['email']
 
+    login_session['csrftoken'] = generate_csrf_token()
+
     return make_response(json.dumps('Successfully connected as %s.' % login_session['username']), 200)
 
 
@@ -105,6 +108,7 @@ def gdisconnect():
         del login_session['username']
         del login_session['email']
         del login_session['picture']
+        del login_session['csrftoken']
         response = make_response(json.dumps('Successfully disconnected.'), 200)
         response.headers['Content-Type'] = 'application/json'
         return redirect(url_for('root'))

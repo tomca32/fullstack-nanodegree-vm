@@ -3,6 +3,7 @@
 <form action="{{url_for('delete_item', item_id=item.id)}}" method = 'POST'>
     <h2>Delete</h2>
     <p>Are you sure you want to delete "{{item.name}} - ({{item.category.name}})"?</p>
+    <input type="hidden" name="csrftoken" value="{{session['csrftoken']}}">
     <input type="submit" value="Delete">
     <a href="{{url_for('get_item', category_name=item.category.name, item_name=item.name)}}">Cancel</a>
 </form>

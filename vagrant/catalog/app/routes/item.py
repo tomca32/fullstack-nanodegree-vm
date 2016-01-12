@@ -2,7 +2,7 @@ from urlparse import urlparse
 
 from flask import render_template, request, redirect, url_for, flash, jsonify, Response
 import xml.etree.ElementTree as ET
-from app.decorators import with_item, provide_query_args, logged_in, with_item_by_id
+from app.decorators import with_item, provide_query_args, logged_in, with_item_by_id, check_csrf
 from .. import app
 from .. import session
 from ..models import Category
@@ -101,6 +101,7 @@ def delete_item_form(item):
 
 @app.route('/item/<int:item_id>/delete', methods=['POST', 'DELETE'])
 @logged_in
+@check_csrf
 def delete_item(item_id):
     drop_item(item_id)
     return redirect(url_for('root'))
