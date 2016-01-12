@@ -1,3 +1,5 @@
+from urlparse import urlparse
+
 from flask import render_template, request, redirect, url_for, flash, jsonify, Response
 import xml.etree.ElementTree as ET
 from app.decorators import with_item, provide_query_args, logged_in, with_item_by_id
@@ -10,18 +12,19 @@ from ..services import item_exists, create_item, update_item, drop_item
 @app.route('/item/new', methods=['GET'])
 @logged_in
 @provide_query_args
-def new_item_form(default_name='', default_description='', default_category_name=''):
+def new_item_form(default_name='', default_description='', default_category_name='', default_image_url=''):
     """
     Displays a form for new item and also displays previous attempted fields if the form was invalid
     :param default_name: Default name for the new item - displayed from the previous attempt if it failed
     :param default_description: Default description - displayed from the previous attempt if it failed
     :param default_category_name: Default category - displayed from the previous attempt if it failed
+    :param default_image_url: Default image URL - displayed from the previous attempt if it failed
     :return: rendered template item_new.html
     """
     categories = session.query(Category).all()
     return render_template('item_new.html', categories=categories, default_name=default_name,
                            default_description=default_description,
-                           default_category_name=default_category_name)
+                           default_category_name=default_category_name, default_image_url=default_image_url)
 
 
 @app.route('/item/new', methods=['POST'])
@@ -34,7 +37,7 @@ def new_item():
     if name == '':
         flash('Error: Item must have a name')
         return redirect(retry_new_item(request.form))
-    create_item(request.form['name'], request.form['description'].strip(), request.form['category'])
+    create_item(request.form['name'], request.form['description'].strip(), request.form['category'], request.form['image_url'])
     return redirect(url_for('root'))
 
 
@@ -105,4 +108,4 @@ def delete_item(item_id):
 
 def retry_new_item(form):
     return url_for('new_item_form', default_name=form['name'], default_description=form['description'],
-                   default_category_name=form['category'])
+                   default_category_name=form['category'], default_image_url=form['image_url'])

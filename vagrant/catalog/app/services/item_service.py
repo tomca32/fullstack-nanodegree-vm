@@ -11,9 +11,9 @@ def item_exists(name):
     return session.query(Item).filter_by(name=name).count() > 0
 
 
-def create_item(name, description, category_name):
+def create_item(name, description, category_name, image_url=None):
     category = session.query(Category).filter_by(name=category_name).one()
-    new_item = Item(name=name, description=description, category=category)
+    new_item = Item(name=name, description=description, category=category, image_url=image_url)
     session.add(new_item)
     session.commit()
 

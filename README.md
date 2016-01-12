@@ -15,6 +15,10 @@ vagrant up
 
 ## P3 Item Catalog
 
+### Images
+
+Items can contain an image. No image itself is contained in the application but the image url can be passed during item creation. There is no URL validation present, so if there is no image in the URL, a broken image will be displayed.
+
 ### Serialization
 
 | Endpoint        | Format           | Result  |

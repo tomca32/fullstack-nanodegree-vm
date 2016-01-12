@@ -12,6 +12,7 @@ class Item(Base):
     description = Column(Text())
     category_id = Column(Integer, ForeignKey('category.id'))
     category = relationship(Category)
+    image_url = Column(String(250))
 
     @property
     def serialize(self):
@@ -20,7 +21,8 @@ class Item(Base):
             'description': self.description,
             'id': self.id,
             'category': self.category.name,
-            'category_id': self.category_id
+            'category_id': self.category_id,
+            'image_url': self.image_url
         }
 
     @property
@@ -40,7 +42,10 @@ class Item(Base):
         category_id = ET.Element('category_id')
         category_id.text = str(self.category_id)
 
+        image_url = ET.Element('image_url')
+        image_url.text = self.image_url
+
         item = ET.Element('item')
-        item.extend([id, name, description, category, category_id])
+        item.extend([id, name, description, category, category_id, image_url])
 
         return item

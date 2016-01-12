@@ -8,6 +8,9 @@
   <li>{{item.name}}</li>
 </ul>
 <h2>{{item.name}} <small>{% include 'components/edit_item_button.html' %}</small></h2>
+{% if item.image_url %}
+  <img class="image-item" src="{{item.image_url}}" />
+{% endif %}
 <p>
   {{item.description}}
 </p>

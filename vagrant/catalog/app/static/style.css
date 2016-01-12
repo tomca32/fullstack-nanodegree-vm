@@ -36,3 +36,7 @@ header .title {
   width: 50px;
   border-radius: 50px;
 }
+
+.image-item {
+  width: 300px;
+}
