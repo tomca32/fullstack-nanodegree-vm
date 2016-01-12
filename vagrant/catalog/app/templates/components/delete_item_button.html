@@ -1,3 +1,5 @@
 {% if 'access_token' in session %}
-  <a href="{{url_for('delete_item_form', category_name=item.category.name, item_name=item.name)}}">Delete</a>
+  <a href="{{url_for('delete_item_form', category_name=item.category.name, item_name=item.name)}}" class="btn btn-sm">
+    <span class="glyphicon glyphicon-trash">Delete
+  </a>
 {% endif %}
