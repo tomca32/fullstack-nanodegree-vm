@@ -40,3 +40,7 @@ header .title {
 .image-item {
   width: 300px;
 }
+
+.credit {
+  margin: 0;
+}
